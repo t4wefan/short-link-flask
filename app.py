@@ -51,6 +51,7 @@ def make_id():
 def add_url():
     url = request.form.get('url', '')
     id = request.form.get('id','')
+    
     if id in [None, '']:
          id =  make_id()
     elif check_url1(url_id=id) == True :
@@ -66,10 +67,11 @@ def add_url():
         })
     else:
         id = id
-        save_url(url_id=id, url=url)
-        status = 'success'
-        print('url added  ' + url + ' id=' +str(id))
-        return jsonify({
+    
+    save_url(url_id=id, url=url)
+    status = 'success'
+    print('url added  ' + url + ' id=' +str(id))
+    return jsonify({
             'status': status,
             'url': str(request.url + 's/' + str(id)) 
             })  
