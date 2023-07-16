@@ -50,7 +50,12 @@ def make_id():
 @app.route('/', methods=['POST'])
 def add_url():
     url = request.form.get('url', '')
-    id =  make_id()
+    id = request.form.get('id','')
+    if id in [None, '']:
+         id =  make_id()
+    else :
+        id = id
+
     save_url(url_id=id, url=url)
     status = 'success'
     print('url added  ' + url + ' id=' +str(id))
