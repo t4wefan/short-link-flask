@@ -53,16 +53,26 @@ def add_url():
     id = request.form.get('id','')
     if id in [None, '']:
          id =  make_id()
-    else :
-        id = id
+    elif check_url1(url_id=id) == True :
+        status = 'error'
+        url = ''
+        info = 'id already exists'
 
-    save_url(url_id=id, url=url)
-    status = 'success'
-    print('url added  ' + url + ' id=' +str(id))
-    return jsonify({
-        'status': status,
-        'url': str(request.url + 's/' + str(id)) 
-        })  
+        return jsonify({
+            'status': status,
+            'url': url,
+            'info': info
+
+        })
+    else:
+        id = id
+        save_url(url_id=id, url=url)
+        status = 'success'
+        print('url added  ' + url + ' id=' +str(id))
+        return jsonify({
+            'status': status,
+            'url': str(request.url + 's/' + str(id)) 
+            })  
     
 
 @app.route('/s/<int:id>')
